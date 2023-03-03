@@ -8,7 +8,7 @@ use Squiz\PhpCodeExam\Mocks\TestData;
 
 class Searcher
 {
-    public array $allData = [];
+    private array $allData;
     private array $searchResult;
 
     public function __construct()
@@ -17,8 +17,8 @@ class Searcher
          * We just assume that we get all of this data from the DB
          * in a reasonably quick way
          */
-        $this->allData = (new TestData())->getFromDbMock();
-        $this->searchResult = [];
+        $this->setAllData((new TestData())->getFromDbMock());
+        $this->setSearchResult([]);
     }
 
     /**
@@ -42,14 +42,14 @@ class Searcher
             }
         }
 
-        return $this->searchResult;
+        return $this->getSearchResult();
     }
 
     /**
      * @param $id
-     * @return array|false|mixed
+     * @return mixed
      */
-    public function getPageById($id)
+    public function getPageById($id): mixed
     {
         $pageIds = array_column($this->allData, 'id');
         if (in_array($id, $pageIds)) {
@@ -68,7 +68,7 @@ class Searcher
     }
 
     /**
-     * @param array|array[] $allData
+     * @param array $allData
      */
     public function setAllData(array $allData): void
     {

@@ -14,7 +14,7 @@ $searcher = new Searcher();
 $logger = new Logger();
 
 $logger->logMsg(
-    sprintf('Got request %s', json_encode($request)),
+    sprintf('Got request %s', $request->getUri()),
     'request'
 );
 
@@ -52,7 +52,7 @@ try {
         }
     } else {
         // print all (is it needed ??)
-        $data = $searcher->allData;
+        $data = $searcher->getAllData();
 
         $response = empty($data) ?
             new Response(NULL, Response::HTTP_NO_CONTENT) :
